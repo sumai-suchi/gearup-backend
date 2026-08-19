@@ -10,4 +10,150 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+
+}
+
+
+
+enum Role {
+  CUSTOMER
+  PROVIDER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum RentalStatus {
+  PLACED
+  CONFIRMED
+  PAID
+  PICKED_UP
+  RETURNED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id        String      @id @default(cuid())
+  name      String
+  email     String      @unique
+  password  String
+  role      Role
+  status    UserStatus  @default(ACTIVE)
+
+  gears     GearItem[]      @relation("ProviderGear")
+  rentals   RentalOrder[]   @relation("CustomerRentals")
+  reviews   Review[]
+  payments  Payment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+
+  gears       GearItem[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GearItem {
+  id            String   @id @default(cuid())
+
+  title         String
+  description   String
+  brand         String
+  image         String
+
+  pricePerDay   Float
+  stock         Int
+
+  isAvailable   Boolean  @default(true)
+
+  providerId    String
+  categoryId    String
+
+  provider      User      @relation("ProviderGear", fields: [providerId], references: [id], onDelete: Cascade)
+  category      Category  @relation(fields: [categoryId], references: [id])
+
+  rentals       RentalOrder[]
+  reviews       Review[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model RentalOrder {
+  id            String        @id @default(cuid())
+
+  customerId    String
+  gearId        String
+
+  startDate     DateTime
+  endDate       DateTime
+
+  totalDays     Int
+  totalAmount   Float
+
+  status        RentalStatus  @default(PLACED)
+
+  customer      User      @relation("CustomerRentals", fields: [customerId], references: [id], onDelete: Cascade)
+  gear          GearItem  @relation(fields: [gearId], references: [id])
+
+  payment       Payment?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Payment {
+  id               String        @id @default(cuid())
+
+  rentalOrderId    String        @unique
+  customerId       String
+
+  amount           Float
+
+  paymentIntentId  String        @unique
+  transactionId    String?       @unique
+
+  status           PaymentStatus @default(PENDING)
+
+  paidAt           DateTime?
+
+  rentalOrder      RentalOrder   @relation(fields: [rentalOrderId], references: [id], onDelete: Cascade)
+  customer         User          @relation(fields: [customerId], references: [id])
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Review {
+  id          String   @id @default(cuid())
+
+  rating      Int
+  comment     String
+
+  customerId  String
+  gearId      String
+
+  customer    User     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  gear        GearItem @relation(fields: [gearId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([customerId, gearId])
 }
