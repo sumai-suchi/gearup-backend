@@ -12,7 +12,7 @@ const registerUser = async (payload : TRegisterUser) => {
     throw new Error("User already exists");
   }
 
-  const hashedPassword = await bcrypt.hash(payload.password, 12);
+  const hashedPassword = await bcrypt.hash(payload.password, parseInt(process.env.BCRYPT_SALT_ROUNDS || "10"));
 
   const result = await prisma.user.create({
     data: {
