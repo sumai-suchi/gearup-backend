@@ -1,0 +1,18 @@
+model User {
+  id        String      @id @default(cuid())
+  name      String      @db.VarChar(255)
+  email     String      @unique @db.VarChar(255)
+  password  String
+  role      Role        @default(CUSTOMER)
+  status    UserStatus  @default(ACTIVE)
+
+
+  gears     GearItem[]      @relation("ProviderGear")
+  rentals   RentalOrder[]   @relation("CustomerRentals")
+  reviews   Review[]
+  payments  Payment[]
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
