@@ -6,7 +6,3 @@ export type TRegisterUser = {
   role: "CUSTOMER" | "PROVIDER" | "ADMIN";
 };
 
-export type TLoginUser = {
-  email: string;
-  password: string;
-};

@@ -6,4 +6,5 @@ const router = Router();
 router.post("/register", userController.registerUser);
 
 
+
 export  const  userRoute = router
