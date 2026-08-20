@@ -7,9 +7,6 @@ import { userRoute } from "./modules/users/users.route"
 
 const app : express.Application = express()
 
-// app.listen(3000, () => {
-//     console.log("Server is running on port 3000")
-// })
 
 app.use(cors())
 app.use(express.json())
