@@ -8,4 +8,5 @@ const router = Router();
 router.post("/login", authController.loginUser);
 
 
+
 export  const  authRoute = router

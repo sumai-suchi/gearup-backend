@@ -34,9 +34,24 @@ const registerUser = async (payload : TRegisterUser) => {
   return result;
 };
 
+const MyProfileDB = async (id: string) => {
+  console.log("MyProfileDB id:", id);
+  const user = await prisma.user.findUnique({
+    where: { id: id },
+   omit: {
+    password: true,
+   },
+  
+
+  });
+
+  return user;
+};
+
 
 
 export const UserService = {
   registerUser,
+ MyProfileDB
   
 };

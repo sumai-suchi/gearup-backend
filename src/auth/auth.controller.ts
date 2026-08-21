@@ -22,7 +22,7 @@ const loginUser = catchAsync(async (req: Request, res: Response , next : NextFun
     httpOnly: true,
     secure : false,
     sameSite : "none",
-    maxAge: 24 * 60 * 60 * 1000
+    maxAge: 24 * 60 * 60 * 1000 *7
   })
     sendResponse(res, {
       success: true,
@@ -35,6 +35,8 @@ const loginUser = catchAsync(async (req: Request, res: Response , next : NextFun
     });
 });
 
+
 export const authController = {
   loginUser,
+
 };

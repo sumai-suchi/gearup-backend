@@ -6,11 +6,11 @@ export const catchAsync =  (fn: RequestHandler) => {
     try{
        await fn(req, res, next)
     }
-    catch (error) {
+    catch (error : any) {
     sendErrorResponse(res, {
       success: false,
       statusCode: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "Failed to register user",
+      message: error.message,
       error: (error as Error).message,
       data: null,
     });
