@@ -4,6 +4,7 @@ import { prisma } from "../lib/prisma";
 import type { TLoginUser } from "./auth.interface";
 import bcrypt from "bcrypt";
 import jwt, { type SignOptions } from "jsonwebtoken";
+import {JwtUtils} from "../utils/jwt";
 
  const loginUser = async (payload: TLoginUser) => {
   const user = await prisma.user.findUnique({
@@ -28,22 +29,17 @@ import jwt, { type SignOptions } from "jsonwebtoken";
     throw new Error("JWT_ACCESS_SECRET is missing");
   }
 
-  const accessToken = jwt.sign(
-    {
+  const Payload = {
     id: user.id,
     email: user.email,
    name: user.name,
     role: user.role,
-  }, 
-   config.jwt_access_secret
- , { expiresIn: config.jwt_access_expiration } as SignOptions);
+  }
 
-  const refreshToken = jwt.sign({
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    role: user.role,
-  },  config.jwt_refresh_secret , { expiresIn: config.jwt_refresh_expiration } as SignOptions);
+
+const accessToken = JwtUtils.createToken(Payload, config.jwt_access_secret, { expiresIn: config.jwt_access_expiration } as SignOptions);
+
+  const refreshToken = JwtUtils.createToken(Payload, config.jwt_refresh_secret, { expiresIn: config.jwt_refresh_expiration } as SignOptions);
 
   return {
     id: user.id,

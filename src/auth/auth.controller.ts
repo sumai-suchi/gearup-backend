@@ -6,13 +6,32 @@ import type { NextFunction, Request, Response } from "express";
 import { AuthService } from "./auth.service";
 
 const loginUser = catchAsync(async (req: Request, res: Response , next : NextFunction) => {
-  const result = await AuthService.loginUser(req.body);
+  const {
+    accessToken,
+    refreshToken
+  } = await AuthService.loginUser(req.body);
 
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure : false,
+    sameSite : "none",
+    maxAge: 24 * 60 * 60 * 1000
+  })
+  
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure : false,
+    sameSite : "none",
+    maxAge: 24 * 60 * 60 * 1000
+  })
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
       message: "User logged in successfully",
-      data: result,
+      data: {
+        accessToken,
+        refreshToken
+      },
     });
 });
 
