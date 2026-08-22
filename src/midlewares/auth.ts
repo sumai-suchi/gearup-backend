@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import type { Role } from "../../generated/prisma/enums";
+import type { Role } from "../../generated/prisma";
 import { catchAsync } from "../utils/catch.async";
 import sendErrorResponse from "../utils/errorResponse";
 import httpStatus from "http-status";
@@ -46,7 +46,7 @@ export  const auth = (...requiredRoles: Role[])=>
         console.log("verifyedTokenn",verifyedTokenn)
      
         if ( requiredRoles.length && !requiredRoles.includes(verifyedTokenn.role)) {
-        sendResponse(res, {
+        return sendResponse(res, {
             success: false,
             statusCode: httpStatus.FORBIDDEN,
             message: "You are not authorized to access this route, Forbidden",

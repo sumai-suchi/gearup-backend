@@ -23,7 +23,7 @@ model GearItem {
   category      Category  @relation(fields: [categoryId], references: [id])
 
 
-  rentals       RentalOrder[]
+  rentalItems   RentalOrderItem[]
   reviews       Review[]
 
 

@@ -3,7 +3,7 @@ model RentalOrder {
 
 
   customerId    String
-  gearId        String
+ 
 
 
   startDate     DateTime
@@ -18,7 +18,7 @@ model RentalOrder {
 
 
   customer      User      @relation("CustomerRentals", fields: [customerId], references: [id], onDelete: Cascade)
-  gear          GearItem  @relation(fields: [gearId], references: [id])
+  items         RentalOrderItem[]
 
 
   payment       Payment?

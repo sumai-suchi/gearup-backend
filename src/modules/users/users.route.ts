@@ -1,7 +1,7 @@
 import  { Router, type NextFunction, type Request, type Response } from "express"
 import { userController } from "./users.controller";
 
-import { Role } from "../../../generated/prisma/client";
+import { Role } from "../../../generated/prisma";
 
 import { auth } from "../../midlewares/auth";
 

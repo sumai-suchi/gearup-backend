@@ -1,0 +1,13 @@
+model RentalOrderItem {
+  id            String      @id @default(cuid())
+  rentalOrderId String
+  gearId        String
+  quantity      Int         @default(1)
+  pricePerDay   Float      
+
+  rentalOrder   RentalOrder @relation(fields: [rentalOrderId], references: [id], onDelete: Cascade)
+  gear          GearItem    @relation(fields: [gearId], references: [id])
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
