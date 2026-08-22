@@ -84,6 +84,17 @@ export  const auth = (...requiredRoles: Role[])=>
           });
       }
 
+      if(user.role != verifyedTokenn.role)
+      {
+        return sendErrorResponse(res, {
+            success: false,
+            statusCode: httpStatus.UNAUTHORIZED,
+            message: "You are not authorized to access this route, Unauthorized",
+            error: "You are not authorized to access this route, Unauthorized",
+            data: null,
+          });
+      }
+
        req.user = {
         id : verifyedTokenn.id,
         name : verifyedTokenn.name,
