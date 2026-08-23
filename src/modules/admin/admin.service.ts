@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma";
-import type { UserStatus } from "../../../generated/prisma";
+import type { UserStatus } from "@prisma/client";
 
 const createCategoryInDB = async (payload: { name: string; description?: string }) => {
   const isCategoryExists = await prisma.category.findUnique({

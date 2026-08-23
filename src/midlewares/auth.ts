@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import type { Role } from "../../generated/prisma";
+import type { Role } from "@prisma/client";
 import { catchAsync } from "../utils/catch.async";
 import sendErrorResponse from "../utils/errorResponse";
 import httpStatus from "http-status";

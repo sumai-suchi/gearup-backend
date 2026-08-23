@@ -1,6 +1,6 @@
 import { prisma } from "../../lib/prisma";
 import type { TGearPayload } from "./provider.interface";
-import type { RentalStatus } from "../../../generated/prisma";
+import type { RentalStatus } from "@prisma/client";
 
 const addGearIntoDB = async (providerId: string, payload: TGearPayload) => {
   const categoryExists = await prisma.category.findUnique({
