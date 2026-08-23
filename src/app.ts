@@ -8,7 +8,7 @@ import { providerRoute } from "./modules/provider/provider.route"
 import { gearRoute, categoryRoute } from "./modules/gear/gear.route"
 import { adminRoute } from "./modules/admin/admin.route"
 import { rentalRoute } from "./modules/rentals/rentals.route"
-// import { paymentRoute } from "./modules/payments/payments.route"
+import { paymentRoute } from "./modules/payments/payments.route"
 import { reviewRoute } from "./modules/reviews/reviews.route"
 
 
@@ -32,7 +32,7 @@ app.use("/api/gear", gearRoute)
 app.use("/api/categories", categoryRoute)
 app.use("/api/admin", adminRoute)
 app.use("/api/rentals", rentalRoute)
-// app.use("/api/payments", paymentRoute)
+app.use("/api/payments", paymentRoute)
 app.use("/api/reviews", reviewRoute)
 
 

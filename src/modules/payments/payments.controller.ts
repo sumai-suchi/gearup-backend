@@ -26,7 +26,7 @@ const confirmPayment = catchAsync(async (req: Request, res: Response) => {
   let paymentIntentId = req.body.paymentIntentId;
   let transactionId = req.body.transactionId;
 
-  // Handle Stripe Webhook format if applicable
+
   if (req.body && req.body.type) {
     const event = req.body;
     if (event.type === "payment_intent.succeeded") {
