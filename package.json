@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "build": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
